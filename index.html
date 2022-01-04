@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Ionicon Font Icon -->
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+    <link rel="stylesheet" href="css/vendor/normalize.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/weather.css">
+    <title>Wheather</title>
+</head>
+<body>
+    <header class="mainAppHeader">
+        <div class="container">
+            <div class="logo">
+                <img class="logoImg" src="assists/img/logo/weather.png" alt="">
+                <h2 class="textlogo">Wheather</h2>
+            </div>
+            <div class="toggle">
+                <ion-icon name="menu"></ion-icon>
+            </div>
+            <nav>
+                <li>
+                    <a href="#">Search City</a>
+                </li>
+            </nav>
+        </div>
+    </header>
+    <main class="app">
+            <section class="leftSection">
+                <header class="appSearch">
+                    <input type="search" placeholder="Enter Your City..." id="inputCity">
+                    <button class="sendSearcgData">
+                        <ion-icon name="search"></ion-icon>
+                    </button>
+                </header>
+                <div class="forecastBar">
+                    <h3 >Wheather</h3>
+                    <h3 class="active">Forecast</h3>
+                </div>
+                <div class="countrysCont">
+                    <div class="country">
+                        <div class="countryIMG">
+                            <img src="assists/img/egypt/citys/alexsandria.jpg" alt="">
+                        </div>
+                        <span class="countryTxt">
+                            alexsandria
+                        </span>
+                    </div>
+                    <div class="country">
+                        <div class="countryIMG">
+                            <img src="assists/img/egypt/citys/cairo.jpg" alt="">
+                        </div>
+                        <span class="countryTxt">
+                            cairo
+                        </span>
+                    </div>
+                    <div class="country">
+                        <div class="countryIMG">
+                            <img src="assists/img/egypt/citys/giza.jpg" alt="">
+                        </div>
+                        <span class="countryTxt">
+                            giza
+                        </span>
+                    </div>
+                    <div class="country">
+                        <div class="countryIMG">
+                            <img src="assists/img/egypt/citys/aswan.jpg" alt="">
+                        </div>
+                        <span class="countryTxt">
+                            aswan
+                        </span>
+                    </div>
+                    <div class="country">
+                        <div class="countryIMG">
+                            <img src="assists/img/egypt/citys/luxor.jpg" alt="">
+                        </div>
+                        <span class="countryTxt">
+                            luxor
+                        </span>
+                    </div>
+                </div>
+                <div class="weekdaysBar">
+                    <h3 class="active">Week</h3>    
+                </div>
+                <ul class="weekdaysWithweather">
+                    <li>
+                        <a class="day" href="#">
+                            Sunday
+                        </a>
+                        <span class="RainForecast">
+                            <ion-icon class="RainForecastLogo" name="water"></ion-icon>
+                            <p class="RainForecastPersant">65%</p>
+                        </span>
+                        <span class="Logo">
+                            <ion-icon name="rainy"></ion-icon>
+                        </span>
+                        <span class="tempture">
+                            <p class="tempLow">
+                                10 
+                                <span>&#8451</span>
+                            </p>
+                            <p class="tempHigh">
+                                16
+                                <span>&#8451</span>
+                            </p>
+                        </span>
+                    </li>
+                    <li>
+                        <a class="day" href="#">
+                            Monday
+                        </a>
+                        <span class="RainForecast">
+                            <ion-icon class="RainForecastLogo" name="water"></ion-icon>
+                            <p class="RainForecastPersant">47%</p>
+                        </span>
+                        <span class="Logo">
+                            <ion-icon name="partly-sunny"></ion-icon>
+                        </span>
+                        <span class="tempture">
+                            <p class="tempLow">
+                                13
+                                <span>&#8451</span>
+                            </p>
+                            <p class="tempHigh">
+                                19
+                                <span>&#8451</span>
+                            </p>
+                        </span>
+                    </li>
+                    <li>
+                        <a class="day" href="#">
+                            Tuesday
+                        </a>
+                        <span class="RainForecast">
+                            <ion-icon class="RainForecastLogo" name="water"></ion-icon>
+                            <p class="RainForecastPersant">28%</p>
+                        </span>
+                        <span class="Logo">
+                            <ion-icon name="sunny"></ion-icon>
+                        </span>
+                        <span class="tempture">
+                            <p class="tempLow">
+                                15 
+                                <span>&#8451</span>
+                            </p>
+                            <p class="tempHigh">
+                                21
+                                <span>&#8451</span>
+                            </p>
+                        </span>
+                    </li>
+                </ul>
+            </section>
+            <section class="rightSection">
+                <div class="ForecastMobile">
+                    <header class="welcomeSection">
+                        <h3 class="welcomeMSG">Good afternon</h3>
+                        <ion-icon class="userIMG" name="contact"></ion-icon>
+                        <h3 class="username">Ahmed Shehata</h3>
+                    </header>
+                    <div class="dateAndTimeMob">
+                        <span class="date">Monday 2/1</span>
+                        <div class="time">16:23</div>
+                    </div>
+                    <div class="WeatherInfo">
+                        <span class="tempture">
+                            <p class="temp">22</p>
+                        </span>
+                        <img class="TempatureLogo" src="assists/img/weather-conditions/cloudy.png" alt="">
+                        <span class="forecastRainMob">
+                            <span class="rainMob">
+                                <ion-icon class="secLogo" name="water"></ion-icon>
+                                <p class="rainTXTMob">42%</p>
+                            </span>
+                            <span class="Humidity">
+                                <ion-icon class="HumidityLogo" name="thermometer"></ion-icon>
+                                <p class="HumidityTXT">18</p>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="countryNameMob">
+                        <span class="CountryMob">
+                            <ion-icon class="countrySecLogo" name="locate"></ion-icon>
+                            egypt
+                        </span>
+                        <span class="cityMob">
+                            alexsandria
+                        </span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+</body>
+</html>
