@@ -21,7 +21,18 @@
 .container{
     /*  */
 }
-
+.flexbox-center-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.flexbox-center-column{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 @media (max-width:767px) {
     .container{
         width: calc(100% - 80px);
@@ -153,31 +164,63 @@ main.app .leftSection{
 }
 .leftSection .appSearch{
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
-    gap: 10px;
+    
 }
-.leftSection .appSearch #inputCity{
+.leftSection .appSearch .CityChoosedName{
+    gap: 8px;
+    user-select: none;
+    padding: 10px 20px;
+    background-color: #c4c4c4;
+    border-radius: 8px;
+    border-left: 3px solid var(--alt-bg-clr);
+}
+
+.leftSection .appSearch .CityChoosedName .countryDisplayedIMG{
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+.leftSection .appSearch .CityChoosedName .countryDisplayedTxt{
+    text-transform: uppercase;
+
+}
+.leftSection .appSearch .CityChoosedName .countryDisplayedIMG img{
+    max-width: 100%;
+    object-fit: cover;
+    aspect-ratio: 1/1;
+}
+
+.leftSection .appSearch .searchContainer {
+    padding: 5px 10px;
+    border-radius: 8px;
+    gap: 10px;
+    background-color: #c4c4c4;
+}
+.leftSection .appSearch .searchContainer #inputCity{
     padding: 10px;
     margin: 10px 0;
     outline: none;
     border: none;
     box-shadow: 0 0 10px 0 #e6e6e6;
-    background-color: #f5f5f5;
+    background-color: #e4e4e4;
     border-bottom:4px solid var(--alt-bg-clr);
+    transition: background-color 0.3s ease-out;
+}
+.leftSection .appSearch .searchContainer #inputCity:focus{
+    background-color: #fff;
     transition: border 0.3s linear;
 }
-.leftSection .appSearch #inputCity:focus{
-    border: 2px solid var(--alt-bg-clr);
-    transition: border 0.3s linear;
-}
-.leftSection .appSearch button.sendSearcgData{
+.leftSection .appSearch .searchContainer button.sendSearcgData{
     padding: 10px;
     background-color: var(--alt-bg-clr);
     border: none;
     border-radius: 50%;
+    cursor: pointer;
 }
-.leftSection .appSearch button.sendSearcgData >:first-child{
+.leftSection .appSearch .searchContainer button.sendSearcgData >:first-child{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -261,16 +304,64 @@ main.app .leftSection{
 }
 .leftSection ul.weekdaysWithweather > li{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
+}
+.leftSection ul.weekdaysWithweather > li >span{
+    width: 140px;
 }
 ul.weekdaysWithweather > li >a.day{
     text-decoration: none;
     color: var(--main-tx-clr);
     font-weight: bold;
     text-transform: capitalize;
+    width: 100px;
 }
-ul.weekdaysWithweather > li > .RainForecast{
+li > .humidityCountainer {
+    gap: 10px;
+}
+li > .humidityCountainer .humidityIco{
+    color: #548CFF;
+    font-size: 1.2rem;
+}
+li > .humidityCountainer .humidityTxt,
+li > .weatherCondition .weatherConditionTxt ,
+li > .pressure .pressureIco .pressureTxt ,
+li > .feelLike .feelLikeTxt
+{
+    color: var(--main-tx-clr);
+    font-weight: 400;
+}
+li > .weatherCondition{
+    gap: 10px;
+}
+li > .pressure{
+    gap: 10px;
+}
+li > .pressure .pressureIco{
+    color: #ca3429;
+    font-size: 2rem;
+}
+li > .feelLike{
+    gap: 8px;
+}
+li > .feelLike .feelLikeIco{
+    color: #B3541E;
+    font-size: 2rem;
+}
+li > .tempture{
+    justify-content: space-between;
+    width: 120px;
+}
+li > .tempture .tempMin{
+    gap: 0;
+}
+
+
+
+
+
+/* ul.weekdaysWithweather > li > .RainForecast{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -301,7 +392,7 @@ ul.weekdaysWithweather > li > .tempture .tempLow{
 }
 ul.weekdaysWithweather > li > .tempture .tempHigh{
     font-weight: bold;
-}
+} */
 .rightSection{
     position: relative;
     border:2px solid;
@@ -443,4 +534,81 @@ ul.weekdaysWithweather > li > .tempture .tempHigh{
 .countryNameMob .CountryMob .countrySecLogo{
     font-size: 1.5rem;
     
+}
+
+.getUsername×Onload{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background: linear-gradient(120deg, #191919e5 ,#041c32b9, #252525bd,#26001b9c);
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(30px);
+    gap: 55px;
+    transition: flex-direction 0.3s ease-in;
+}
+@media (max-width:768px) {
+    .getUsername×Onload{
+        flex-direction: column;
+        transition: flex-direction 0.3s ease-out;
+
+    }
+    
+}
+.getUsername×Onload .onloadWelcomeMSG> :first-child{
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 2.5rem;
+}
+.getUsername×Onload .onloadWelcomeMSG> :last-child{
+    color: #fff;
+    max-width: 280px;
+    text-transform: capitalize;
+    line-height: 18px;
+    font-weight: 400;
+}
+@media (max-width:768px) {
+    .getUsername×Onload .onloadWelcomeMSG> :first-child{
+        font-size: 1.0rem;
+        text-align: center;
+    }
+    .getUsername×Onload .onloadWelcomeMSG> :last-child{
+        text-align: center;
+    }
+}
+.getUsername×Onload .usernamefield{
+    gap: 8px;
+    justify-content: space-around;
+    height: 10%;
+}
+.getUsername×Onload .usernamefield >input[type='text']{
+    padding: 10px 8px;
+    border: none;
+    outline: none;
+    background-color: #c4c4c4;
+    border-radius: 8px;
+    transition: border 0.3s ease , background-color 0.5s ease-out;
+}
+.getUsername×Onload .usernamefield >input[type='text']:focus{
+    background-color: #FFF;
+    border: 5px solid var(--alt-bg-clr);
+}
+.getUsername×Onload .usernamefield >button.sendUsername{
+    gap: 10px;
+    width: 100%;
+    padding: 5px 0;
+    color: #fff;
+    background-color: var(--alt-bg-clr);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.3s ease-out;
+}
+.getUsername×Onload .usernamefield >button.sendUsername:hover{
+    opacity: 0.8;
+}
+.getUsername×Onload .usernamefield >button.sendUsername >:first-child{
+    font-size: 1.5rem;
+    transform: rotate(-40deg);
 }

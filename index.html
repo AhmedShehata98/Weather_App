@@ -31,10 +31,18 @@
     <main class="app">
             <section class="leftSection">
                 <header class="appSearch">
-                    <input type="search" placeholder="Enter Your City..." id="inputCity">
-                    <button class="sendSearcgData">
-                        <ion-icon name="search"></ion-icon>
-                    </button>
+                    <div class="CityChoosedName flexbox-center-row">
+                        <h3 class="countryDisplayedTxt">alexsandria</h3>
+                        <div class="countryDisplayedIMG">
+                            <img src="/assists/img/egypt/citys/alexsandria.jpg" alt="">
+                        </div>
+                    </div>
+                    <div class="searchContainer flexbox-center-row">
+                        <input type="search" placeholder="Enter Your City Name..." id="inputCity">
+                        <button class="sendSearcgData">
+                            <ion-icon name="search"></ion-icon>
+                        </button>
+                    </div>
                 </header>
                 <div class="forecastBar">
                     <h3 >Wheather</h3>
@@ -90,66 +98,34 @@
                         <a class="day" href="#">
                             Sunday
                         </a>
-                        <span class="RainForecast">
-                            <ion-icon class="RainForecastLogo" name="water"></ion-icon>
-                            <p class="RainForecastPersant">65%</p>
+                        <span class="humidityCountainer flexbox-center-row">
+                            <ion-icon class="humidityIco" name="water"></ion-icon>
+                            <p class="humidityTxt">65%</p>
                         </span>
-                        <span class="Logo">
-                            <ion-icon name="rainy"></ion-icon>
+                        <span class="weatherCondition flexbox-center-row">
+                            <img class="weatherConditionIco" src="/assists/img/weather-conditions/cloudy (1).png" alt="">
+                            <p class="weatherConditionTxt">Cloudly day</p>
                         </span>
-                        <span class="tempture">
-                            <p class="tempLow">
-                                10 
+                        <span class="pressure flexbox-center-row">
+                            <ion-icon class="pressureIco" name="speedometer"></ion-icon>
+                            <p class="pressureTxt">1025 hPa</p>
+                        </span>
+                        <span class="feelLike flexbox-center-row">
+                            <ion-icon class="feelLikeIco" name="man"></ion-icon>
+                            <p class="feelLikeTxt">17</p>
+                            <span>&#8451</span>
+                        </span>
+                        <span class="tempture flexbox-center-row">
+                            <span class="tempMin flexbox-center-row">
+                                <ion-icon class="tempMinIco" name="thermometer"></ion-icon>
+                                <p class="tempMinTxt">14</p>
                                 <span>&#8451</span>
-                            </p>
-                            <p class="tempHigh">
-                                16
+                            </span>
+                            <span class="tempHigh flexbox-center-row">
+                                <ion-icon name="thermometer"></ion-icon>
+                                <p class="tempHighTxt">19</p>
                                 <span>&#8451</span>
-                            </p>
-                        </span>
-                    </li>
-                    <li>
-                        <a class="day" href="#">
-                            Monday
-                        </a>
-                        <span class="RainForecast">
-                            <ion-icon class="RainForecastLogo" name="water"></ion-icon>
-                            <p class="RainForecastPersant">47%</p>
-                        </span>
-                        <span class="Logo">
-                            <ion-icon name="partly-sunny"></ion-icon>
-                        </span>
-                        <span class="tempture">
-                            <p class="tempLow">
-                                13
-                                <span>&#8451</span>
-                            </p>
-                            <p class="tempHigh">
-                                19
-                                <span>&#8451</span>
-                            </p>
-                        </span>
-                    </li>
-                    <li>
-                        <a class="day" href="#">
-                            Tuesday
-                        </a>
-                        <span class="RainForecast">
-                            <ion-icon class="RainForecastLogo" name="water"></ion-icon>
-                            <p class="RainForecastPersant">28%</p>
-                        </span>
-                        <span class="Logo">
-                            <ion-icon name="sunny"></ion-icon>
-                        </span>
-                        <span class="tempture">
-                            <p class="tempLow">
-                                15 
-                                <span>&#8451</span>
-                            </p>
-                            <p class="tempHigh">
-                                21
-                                <span>&#8451</span>
-                            </p>
+                            </span>
                         </span>
                     </li>
                 </ul>
@@ -193,6 +169,21 @@
                 </div>
             </section>
         </div>
+        <section class="getUsername×Onload flexbox-center-row">
+            <div class="onloadWelcomeMSG">
+                <h1>Hello Dear User</h1>
+                <p>Welcome With Me Weather App ,. Please enter Your Name </p>
+            </div>
+            <div class="usernamefield flexbox-center-column">
+                <input type="text" id="username">
+                <button class="sendUsername flexbox-center-row">
+                    <ion-icon name="send"></ion-icon>
+                    Send
+                </button>
+            </div>
+        </section>
     </main>
+
+    <script src="js/weather.js" ></script>
 </body>
 </html>
