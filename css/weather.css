@@ -1,14 +1,14 @@
 /* Start Main Global Ruls */
 /*  */
 /* Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap');
 /*  */
 *,
 *::before,
 *::after
 {
     font-size: 16px;
-    font-family: 'Poppins','segoe UI', sans-serif;
+    font-family: 'Nunito','segoe UI', sans-serif;
     box-sizing: border-box;
 }
 :root{
@@ -194,6 +194,7 @@ main.app .leftSection{
 }
 
 .leftSection .appSearch .searchContainer {
+    position: relative;
     padding: 5px 10px;
     border-radius: 8px;
     gap: 10px;
@@ -213,6 +214,35 @@ main.app .leftSection{
     background-color: #fff;
     transition: border 0.3s linear;
 }
+
+.leftSection .appSearch .searchContainer .suggestList{
+    position: absolute;
+    top: 100%;
+    left: 4%;
+    padding: 8px;
+    width: calc(100% - 70px);
+    background-color: #fff;
+    box-shadow: 0 0 20px 0 #e4e4e4;
+    border-radius: 5px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease-out;
+}
+.leftSection .appSearch .searchContainer .suggestList.active{
+    opacity: 1;
+    pointer-events: all;
+}
+.leftSection .appSearch .searchContainer .suggestList li{
+    list-style: none;
+    border-radius: 8px;
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+.leftSection .appSearch .searchContainer .suggestList li:hover{
+    background-color: #e4e4e4;
+}
+
 .leftSection .appSearch .searchContainer button.sendSearcgData{
     padding: 10px;
     background-color: var(--alt-bg-clr);
@@ -270,11 +300,15 @@ main.app .leftSection{
 .country .countryIMG{
     width: 100%;
     height: 180px;
+    overflow: hidden;
+    border-radius: 25px;
+}
+.countrysCont .country.active .countryIMG{
+    border: 7px solid var(--alt-bg-clr);    
 }
 .country .countryIMG img{
     max-width: 100%;
     height: 100%;
-    border-radius: 25px;
     object-fit: cover;
 }
 .country .countryTxt{
@@ -426,7 +460,7 @@ ul.weekdaysWithweather > li > .tempture .tempHigh{
 }
 .ForecastMobile .welcomeSection{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     gap: 15px;
     padding: 0 15px;
@@ -436,18 +470,20 @@ ul.weekdaysWithweather > li > .tempture .tempHigh{
     font-weight: bolder;
     font-size: 1.1rem;
     text-transform: capitalize;
-    max-width: 85px;
+    max-width: fit-content;
 }
 .ForecastMobile .welcomeSection .userIMG{
     margin-left: auto;
-    font-size: 2.3rem;
-    padding: 8px;
+    font-size: 1.5rem;
+    padding: 5px;
     border-radius: 35px;
     background-color: var(--main-bg-clr);
+    box-shadow: 0 0 15px 0 #c4c4c4;
 }
 .ForecastMobile .welcomeSection .username{
     text-transform: capitalize;
-    font-weight: normal;
+    font-weight: bold;
+    font-size: 1.0rem;
 }
 .ForecastMobile .dateAndTimeMob{
     display: flex;
@@ -457,6 +493,14 @@ ul.weekdaysWithweather > li > .tempture .tempHigh{
     font-weight: bold;
     color: var(--main-tx-clr);
     padding: 0 15px ;
+}
+.ForecastMobile .dateAndTimeMob .time {
+    font-size: 14px;
+    font-weight: normal;
+}
+.ForecastMobile .dateAndTimeMob .date{
+    font-weight: normal;
+    font-size: 1.0rem;
 }
 .ForecastMobile .WeatherInfo{
     display: flex;
@@ -483,37 +527,39 @@ ul.weekdaysWithweather > li > .tempture .tempHigh{
     font-weight: bolder;
     color: var(--main-tx-clr);
 }
-.ForecastMobile .WeatherInfo .TempatureLogo{
-    animation: infinite updown alternate 3s;
-}
-.ForecastMobile .WeatherInfo .forecastRainMob{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.ForecastMobile .WeatherInfo .forecaseDescription{
     gap: 25px;
-    width: 100%;
+    font-size: 1.2rem;
 }
-.ForecastMobile .WeatherInfo .forecastRainMob .rainMob,
-.ForecastMobile .WeatherInfo .forecastRainMob .Humidity{
-    display: flex;
-    align-items: center;
+.ForecastMobile .WeatherInfo .TempatureLogo{
+    animation: infinite updown alternate 3s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+}
+
+.ForecastMobile .WeatherInfo  .feelAndHumidity{
+    gap: 50px;
+}
+.ForecastMobile .WeatherInfo  .feelAndHumidity .Humidity,
+.ForecastMobile .WeatherInfo  .feelAndHumidity .FeelLikeMob{
+
     gap: 5px;
     color: var(--main-tx-clr);
 }
-.ForecastMobile .WeatherInfo .forecastRainMob .rainMob .rainTXTMob ,
-.ForecastMobile .WeatherInfo .forecastRainMob .Humidity .HumidityTXT ,
-.ForecastMobile .WeatherInfo .forecastRainMob .rainMob .secLogo ,
-.ForecastMobile .WeatherInfo .forecastRainMob .Humidity .HumidityLogo 
+.ForecastMobile .WeatherInfo .feelAndHumidity .FeelLikeMob .feelTXTMob ,
+.ForecastMobile .WeatherInfo .feelAndHumidity .Humidity .HumidityTXT ,
+.ForecastMobile .WeatherInfo .feelAndHumidity .FeelLikeMob .secLogo ,
+.ForecastMobile .WeatherInfo .feelAndHumidity .Humidity .HumidityLogo 
 {
     font-size: 1.2rem;
     font-weight: 400;
     
 }
-.ForecastMobile .WeatherInfo .forecastRainMob .rainMob .secLogo {
-    color: #548CFF;
-}
-.ForecastMobile .WeatherInfo .forecastRainMob .Humidity .HumidityLogo{
+.ForecastMobile .WeatherInfo .feelAndHumidity .FeelLikeMob .secLogo {
+    font-size: 1.7rem;
     color: #ff6056;
+}
+.ForecastMobile .WeatherInfo .feelAndHumidity .Humidity .HumidityLogo{
+    font-size: 1.7rem;
+    color: #548CFF;
 }
 .countryNameMob{
     display: flex;

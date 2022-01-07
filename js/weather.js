@@ -1,7 +1,10 @@
 // iniializing Variables
 // 
-let countryName = 'giza';
-const openWeatherMapAPI = `http://api.openweathermap.org/data/2.5/weather?q=${countryName}&units=metric&appid=74cce337503c10742eb942d8476e78b6`
+let countryName = 'cairo';
+const openWeatherMapAPI = `http://api.weatherapi.com/v1/forecast.json?key=88fd05005e44488bab5121339220701 &q=${countryName}&days=7&aqi=no&alerts=no`
+
+const searchInput = document.querySelector('.searchContainer #inputCity');
+const suggestList = document.querySelector('.leftSection .appSearch .searchContainer .suggestList');
 const weekDays = [ 'Saturday','Sunday','Monday','Tuesday','Wednesday' ,'Thursday' ,'Friday' ];
 
 const weekDaysContainer = document.querySelector('ul.weekdaysWithweather');
@@ -11,11 +14,19 @@ const cityChoosedImg   = document.querySelector('.CityChoosedName .countryDispla
 const onloadOverlay = document.querySelector('.getUsername×Onload')
 const onloadOverlayInput = document.querySelector('.getUsername×Onload #username');
 const onloadOverlayBTN = document.querySelector('.getUsername×Onload .sendUsername');
-let userName ;
-const mobWelcomeMSG = document.querySelector('.welcomeMSG')
-const mobUserName =document.querySelector('.username')
-const mobDate =document.querySelector('.dateAndTimeMob .date')
-const mobTime =document.querySelector('.dateAndTimeMob .time')
+const mobWelcomeMSG = document.querySelector('.welcomeMSG');
+const mobUserName =document.querySelector('.username');
+const mobDate =document.querySelector('.dateAndTimeMob .date');
+const mobTime =document.querySelector('.dateAndTimeMob .time');
+const temp  = document.querySelector('.WeatherInfo .tempture .temp');
+const forecastLogo  = document.querySelector('.WeatherInfo .TempatureLogo');
+const feelLike  = document.querySelector('.WeatherInfo .feelTXTMob');
+const humidityMob  = document.querySelector('.WeatherInfo .HumidityTXT');
+const CountryMob  = document.querySelector('.CountryMob')
+const CityMob  = document.querySelector('.cityMob');
+const forecastDescription  = document.querySelector('.ForecastDescriptonTxt');
+
+const countriesList = document.querySelectorAll('.countrysCont div');
 
 
 // creating Functuions
@@ -24,16 +35,16 @@ var fetchApiData = async (url)=>{
     let respone = await fetch(url),
         data =  await respone.json();
         weekdaysForecatHTML(weekDays,data);
-        ForecastInnerMobile(data,userName);
+        ForecastInnerMobile(data);
+        chooseMobForeCastBG(data)
     
 }
 
 var weekdaysForecatHTML=(weekdaysArr,apiData)=>{
         weekDaysContainer.innerHTML = '';
-        
-        cityChoosedName.textContent = apiData.name
-
+        cityChoosedName.textContent = apiData.location.name;
         ImgSrc(apiData);
+
 
     for(let i=0 ; i < weekdaysArr.length ;i++){
         let li = document.createElement('li'),
@@ -89,6 +100,7 @@ var weekdaysForecatHTML=(weekdaysArr,apiData)=>{
         // minTempTXT.appendChild( document.createTextNode());
         // maxTempTXT.appendChild( document.createTextNode());
 
+
         // set attribute and classes
         dayName.className ='day';
         spanHumidityCountainer.className ='humidityCountainer flexbox-center-row';
@@ -121,7 +133,7 @@ var weekdaysForecatHTML=(weekdaysArr,apiData)=>{
 }
 
 function ImgSrc(api){
-    let name = api.name;
+    let name = api.location.name;
     switch (name) {
         case 'Alexandria':
             cityChoosedImg.src = '../assists/img/egypt/citys/alexsandria.jpg'
@@ -147,28 +159,99 @@ function ImgSrc(api){
     }
 }
 
+
 var onloadOverLayMSG=()=>{
     onloadOverlayBTN.addEventListener('click',()=>{
-        userName = onloadOverlayInput.value;
+        if (onloadOverlayInput.value == null || onloadOverlayInput.value == '') {
+            
+            mobUserName.textContent = 'Not entered'
+        }else{    
+            mobUserName.textContent = onloadOverlayInput.value;
+        }
         onloadOverlay.remove();
     })
 }
-var  ForecastInnerMobile = (api,username)=>{
-    let timeanddate = new Date(),
-        hour = timeanddate.getHours(),
-        mins = timeanddate.getMinutes(),
-        Day = timeanddate.getDay(),
-        Month = timeanddate.getUTCMonth();
+
+var ForecastInnerMobile = (api)=>{
+    mobDate.textContent= api.current.last_updated.split(' ')[0]
+    mobTime.textContent= api.current.last_updated.split(' ')[1]
+
+    // forecast inner
+    temp.textContent = api.current.temp_c;
+    forecastLogo.src = api.current.condition.icon;
+    feelLike.textContent = api.current.feelslike_c;
+    humidityMob.textContent = api.current.humidity + ' %';
+    CountryMob.appendChild(document.createTextNode(api.location.country))
+    CityMob.textContent = api.location.region || api.location.name;
+    forecastDescription.textContent = api.current.condition.text;
+}
+var chooseMobForeCastBG=(api)=>{
+    let getAPIHour = Number( api.location.localtime.split(' ')[1].split(":")[0]);
     
-}
+    if (getAPIHour > 12) {
+        mobWelcomeMSG.textContent = 'Good Evening'
+        if (api.current.feelslike_c <= 14) {
+            
+            document.querySelector('.rightSection').style.backgroundImage= "  url('../assists/img/winter/winNight.png') "
+        }else{
 
-var DateFormat=()=>{
+            document.querySelector('.rightSection').style.backgroundImage= "  url('../assists/img/summer/summNight.png') "
+        }
+    }else{
+        mobWelcomeMSG.textContent = 'Good Morinig'
+        if (api.current.feelslike_c <= 14) {
+            document.querySelector('.rightSection').style.backgroundImage= "  url('../assists/img/summer/summMorning.png') "
+            
+        }else{
 
+        }
+    }
 }
+// Get The Activated Caountry
+
+
+
 // Calling Functions
 // 
 // weekdaysForecatHTML(weekDays);
 fetchApiData(openWeatherMapAPI);
-window.onload= onloadOverLayMSG();
+onloadOverLayMSG();
 // Adding Events
 // 
+countriesList.forEach(country => {
+    if (country.dataset.id == countryName) {
+        country.classList.add('active')
+    }else{
+        country.classList.remove('active')
+    }
+})
+
+
+searchInput.addEventListener('keyup',()=>{
+    
+    if (searchInput.value.length >= 1) {
+        suggestList.classList.add('active');
+        suggestList.innerHTML = `<li>${searchInput.value}</li>`
+
+        // Get Value and remove list items
+            Array.from(suggestList.children).forEach( child =>{
+                child.addEventListener('click',(e)=>{
+                    countryName = e.target.textContent ;
+                    fetchApiData(openWeatherMapAPI);
+
+                    
+                    e.target.parentElement.remove() ;
+                })
+            })
+    }else{
+        
+        suggestList.classList.remove('active')
+
+    }
+})
+
+searchInput.addEventListener('keyup',(e)=>{
+    if (e.key === 'Backspace') {
+        Array.from(suggestList.children).forEach( child => child.remove() )
+    }
+})
