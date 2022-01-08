@@ -1,7 +1,9 @@
 // iniializing Variables
 // 
-let countryName = 'cairo';
-const openWeatherMapAPI = `http://api.weatherapi.com/v1/forecast.json?key=88fd05005e44488bab5121339220701 &q=${countryName}&days=7&aqi=no&alerts=no`
+let GeoLocation = [];
+// Get GeoLocation Information
+GetUserlocation(GeoLocation)
+const urlAPI = `http://api.weatherapi.com/v1/forecast.json?key=88fd05005e44488bab5121339220701&q=${GeoLocation.join()}&days=7&aqi=no&alerts=no`
 
 const searchInput = document.querySelector('.searchContainer #inputCity');
 const suggestList = document.querySelector('.leftSection .appSearch .searchContainer .suggestList');
@@ -29,15 +31,21 @@ const forecastDescription  = document.querySelector('.ForecastDescriptonTxt');
 const countriesList = document.querySelectorAll('.countrysCont div');
 
 
+
 // creating Functuions
 // 
-var fetchApiData = async (url)=>{
+
+
+
+async function fetchApiData (url){
     let respone = await fetch(url),
         data =  await respone.json();
         weekdaysForecatHTML(weekDays,data);
         ForecastInnerMobile(data);
         chooseMobForeCastBG(data)
     
+    console.log('api is' + url);
+
 }
 
 var weekdaysForecatHTML=(weekdaysArr,apiData)=>{
@@ -207,19 +215,34 @@ var chooseMobForeCastBG=(api)=>{
         }
     }
 }
-// Get The Activated Caountry
 
-
+function GetUserlocation (GeoLocationArr){
+    if (navigator.geolocation){
+        navigator.geolocation.getCurrentPosition( (posiosion,error)=>{
+            GeoLocationArr.splice(0,2)
+            GeoLocationArr.push(posiosion.coords.latitude)
+            GeoLocationArr.push(posiosion.coords.longitude)
+            
+        })
+    }else{
+        console.log('error something');
+    }
+}
 
 // Calling Functions
 // 
-// weekdaysForecatHTML(weekDays);
-fetchApiData(openWeatherMapAPI);
+
+fetchApiData(urlAPI);
 onloadOverLayMSG();
+
+
 // Adding Events
 // 
+
+
+// Get The Activated Caountry
 countriesList.forEach(country => {
-    if (country.dataset.id == countryName) {
+    if (country.dataset.id == GeoLocation) {
         country.classList.add('active')
     }else{
         country.classList.remove('active')
@@ -236,8 +259,8 @@ searchInput.addEventListener('keyup',()=>{
         // Get Value and remove list items
             Array.from(suggestList.children).forEach( child =>{
                 child.addEventListener('click',(e)=>{
-                    countryName = e.target.textContent ;
-                    fetchApiData(openWeatherMapAPI);
+                    GeoLocation = e.target.textContent ;
+                    fetchApiData(urlAPI);
 
                     
                     e.target.parentElement.remove() ;
