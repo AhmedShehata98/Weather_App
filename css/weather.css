@@ -12,11 +12,13 @@
     box-sizing: border-box;
 }
 :root{
-    --main-bg-clr:#f1f1f1;
-    --alt-bg-clr:#2F3A8F;
+    --main-bg-clr:#f5f5f5;
+    
+    --alt-ele-bg-clr: #1EAE98;
+    --alt-bg-clr:linear-gradient(120deg ,#233E8B  ,#1EAE98  ,#A9F1DF);
     --main-tx-clr:#252525;
     --alt-tx-clr:#fff;
-    --shadow-overlay:#c4c4c46b;
+    --shadow-overlay:#252525c7;
 }
 .container{
     /*  */
@@ -36,6 +38,8 @@
 @media (max-width:767px) {
     .container{
         width: calc(100% - 80px);
+        margin-right: auto;
+        margin-left: auto;
         padding: 0 30px;
     }
 }
@@ -71,6 +75,7 @@ header.mainAppHeader{
     width: 100%;
     background: var(--alt-bg-clr);
     height: 60px;
+
 }
 header.mainAppHeader .container{
     display: flex;
@@ -103,42 +108,78 @@ header.mainAppHeader .container{
     font-size: 2.2rem;
     text-align: center;
 }
-.container nav{
+.container nav.ControlPannel{
     position: absolute;
+    z-index: -1;
     top: 100%;
     right: 0;
-    display: none; /*flex*/
+    display: flex;
     justify-content: flex-end;
+    gap: 15px;
     list-style: none;
-    background: #f5f5f5;
-    width: 20%;
-    /* height: fit-content; */
-    height: 150px;
-    
-}
-.container nav li{
-    position: relative;
-    padding: 10px 5px;
+    background: #fff;
     width: 100%;
     height: fit-content;
+    background: #fff;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translateY(-200%);
 }
-.container nav li::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 3px;
-    background-color: var(--alt-bg-clr);
-    transform: translateX(-50%);
-    transition: width 0.3s ease-out;
+.container nav.ControlPannel.active{
+    transform: translateY(0);
+
 }
-.container nav li:hover::after{
-    width: 85%;
+.container nav.ControlPannel li.mobSearchCont{
+    position: relative;
+    padding: 10px 5px;
+    height: fit-content;
+    width: 50%;
+    border-radius: 8px;
+    gap: 10px;
 }
-.container nav li a{
-    text-decoration: none;
+@media (max-width:768px) {
+    .container nav.ControlPannel li.mobSearchCont{
+        width: 75% !important;
+    }
+}
+
+.container nav.ControlPannel .toggleNotificationPanel {
+    background: #e4e4e4;
+    padding: 10px 25px;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+.container nav.ControlPannel .toggleNotificationPanel .mobNotifiList{
+    font-size: 1.5rem;
+    color: #252525;
+}
+.container nav.ControlPannel .toggleNotificationPanel > a{
+    text-decoration: unset;
     color: var(--main-tx-clr);
+}
+.container nav.ControlPannel .toggleNotificationPanel >span{
+    background: var(--alt-bg-clr);
+    padding: 5px 8px;
+    color: var(--alt-tx-clr);
+}
+
+
+.container nav.ControlPannel li >input[type='search']{
+    padding: 8px 10px;
+    border: 2px solid var(--alt-ele-bg-clr);
+    
+}
+.container nav.ControlPannel li >button#mobSendData{
+    display: inline-block;
+    background: var(--alt-bg-clr);
+    border: 2px solid #fff;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.container nav.ControlPannel li >button#mobSendData >:first-child{
+    font-size: 1.5rem;
+    color: #fff;
 }
 
 main.app{
@@ -164,7 +205,7 @@ main.app .leftSection{
 }
 .leftSection .appSearch{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     
 }
@@ -172,7 +213,6 @@ main.app .leftSection{
     gap: 8px;
     user-select: none;
     padding: 10px 20px;
-    background-color: #c4c4c4;
     border-radius: 8px;
     border-left: 3px solid var(--alt-bg-clr);
 }
@@ -198,7 +238,8 @@ main.app .leftSection{
     padding: 5px 10px;
     border-radius: 8px;
     gap: 10px;
-    background-color: #c4c4c4;
+    border: 2px solid #c4c4c4;
+    
 }
 .leftSection .appSearch .searchContainer #inputCity{
     padding: 10px;
@@ -206,46 +247,18 @@ main.app .leftSection{
     outline: none;
     border: none;
     box-shadow: 0 0 10px 0 #e6e6e6;
-    background-color: #e4e4e4;
+    background: #e4e4e4;
     border-bottom:4px solid var(--alt-bg-clr);
-    transition: background-color 0.3s ease-out;
+    transition: background 0.3s ease-out;
 }
 .leftSection .appSearch .searchContainer #inputCity:focus{
-    background-color: #fff;
+    background: #fff;
     transition: border 0.3s linear;
-}
-
-.leftSection .appSearch .searchContainer .suggestList{
-    position: absolute;
-    top: 100%;
-    left: 4%;
-    padding: 8px;
-    width: calc(100% - 70px);
-    background-color: #fff;
-    box-shadow: 0 0 20px 0 #e4e4e4;
-    border-radius: 5px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.5s ease-out;
-}
-.leftSection .appSearch .searchContainer .suggestList.active{
-    opacity: 1;
-    pointer-events: all;
-}
-.leftSection .appSearch .searchContainer .suggestList li{
-    list-style: none;
-    border-radius: 8px;
-    padding: 4px 8px;
-    cursor: pointer;
-}
-
-.leftSection .appSearch .searchContainer .suggestList li:hover{
-    background-color: #e4e4e4;
 }
 
 .leftSection .appSearch .searchContainer button.sendSearcgData{
     padding: 10px;
-    background-color: var(--alt-bg-clr);
+    background: var(--alt-bg-clr);
     border: none;
     border-radius: 50%;
     cursor: pointer;
@@ -266,7 +279,7 @@ main.app .leftSection{
  .leftSection .forecastBar h3.active{
     padding: 15px 10px;
     border-radius: 25px;
-    background-color: #c4c4c4;
+    background: #c4c4c4;
 }
 .leftSection .countrysCont{
     display: grid;
@@ -279,13 +292,13 @@ main.app .leftSection{
 }
 .leftSection .countrysCont::-webkit-scrollbar{
     -webkit-appearance: none;
-    background-color: #c4c4c4;
+    background: #c4c4c4;
     border-radius: 30px;
     height: 10px;
 }
 .leftSection .countrysCont::-webkit-scrollbar-thumb{
     -webkit-appearance: none;
-    background-color: var(--alt-bg-clr);
+    background: var(--alt-ele-bg-clr);
     border-radius: 40px;
 }
 .countrysCont .country{
@@ -304,7 +317,7 @@ main.app .leftSection{
     border-radius: 25px;
 }
 .countrysCont .country.active .countryIMG{
-    border: 7px solid var(--alt-bg-clr);    
+    border: 7px solid var(--alt-ele-bg-clr);    
 }
 .country .countryIMG img{
     max-width: 100%;
@@ -328,7 +341,7 @@ main.app .leftSection{
     font-weight: bold;
     padding: 15px 10px;
     border-radius: 25px;
-    background-color: #c4c4c4;
+    background: #c4c4c4;
 }
 .leftSection ul.weekdaysWithweather{
     display: flex;
@@ -391,42 +404,6 @@ li > .tempture .tempMin{
     gap: 0;
 }
 
-
-
-
-
-/* ul.weekdaysWithweather > li > .RainForecast{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-}
-ul.weekdaysWithweather > li > .RainForecast .RainForecastLogo{
-    font-size: 1.5rem;
-    color: #548CFF;
-}
-ul.weekdaysWithweather > li > .RainForecast .RainForecastPersant{
-    color: var(--main-tx-clr);
-    font-weight: 400;
-    font-weight: 400;
-}
-ul.weekdaysWithweather > li > .Logo >:first-child{
-    font-size: 2rem;
-    color: #6D8299;
-}
-ul.weekdaysWithweather > li > .tempture{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap:25px;
-}
-ul.weekdaysWithweather > li > .tempture .tempLow{
-    font-weight: 400;
-    color: var(--main-tx-clr);
-}
-ul.weekdaysWithweather > li > .tempture .tempHigh{
-    font-weight: bold;
-} */
 .rightSection{
     position: relative;
     border:2px solid;
@@ -449,7 +426,7 @@ ul.weekdaysWithweather > li > .tempture .tempHigh{
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--shadow-overlay);
+    background: var(--shadow-overlay);
 
 }
 .rightSection .ForecastMobile{
@@ -464,7 +441,7 @@ ul.weekdaysWithweather > li > .tempture .tempHigh{
     align-items: center;
     gap: 15px;
     padding: 0 15px;
-    color: var(--main-tx-clr);
+    color: var(--alt-tx-clr);
 }
 .ForecastMobile .welcomeSection .welcomeMSG{
     font-weight: bolder;
@@ -477,7 +454,7 @@ ul.weekdaysWithweather > li > .tempture .tempHigh{
     font-size: 1.5rem;
     padding: 5px;
     border-radius: 35px;
-    background-color: var(--main-bg-clr);
+    background: var(--alt-ele-bg-clr);
     box-shadow: 0 0 15px 0 #c4c4c4;
 }
 .ForecastMobile .welcomeSection .username{
@@ -491,7 +468,7 @@ ul.weekdaysWithweather > li > .tempture .tempHigh{
     justify-content: center;
     align-items: flex-start;
     font-weight: bold;
-    color: var(--main-tx-clr);
+    color: var(--alt-tx-clr);
     padding: 0 15px ;
 }
 .ForecastMobile .dateAndTimeMob .time {
@@ -515,7 +492,7 @@ ul.weekdaysWithweather > li > .tempture .tempHigh{
 .ForecastMobile .WeatherInfo .tempture .temp {
     position: relative;
     font-size: 5.5rem;
-    color: var(--alt-bg-clr);
+    color: var(--alt-ele-bg-clr);
     margin-bottom: auto;
 }
 .ForecastMobile .WeatherInfo .tempture .temp::after{
@@ -531,6 +508,9 @@ ul.weekdaysWithweather > li > .tempture .tempHigh{
     gap: 25px;
     font-size: 1.2rem;
 }
+.ForecastMobile .WeatherInfo .forecaseDescription .ForecastDescriptonTxt{
+    color: var(--alt-tx-clr);
+}
 .ForecastMobile .WeatherInfo .TempatureLogo{
     animation: infinite updown alternate 3s cubic-bezier(0.45, 0.05, 0.55, 0.95);
 }
@@ -542,7 +522,7 @@ ul.weekdaysWithweather > li > .tempture .tempHigh{
 .ForecastMobile .WeatherInfo  .feelAndHumidity .FeelLikeMob{
 
     gap: 5px;
-    color: var(--main-tx-clr);
+    color: var(--alt-tx-clr);
 }
 .ForecastMobile .WeatherInfo .feelAndHumidity .FeelLikeMob .feelTXTMob ,
 .ForecastMobile .WeatherInfo .feelAndHumidity .Humidity .HumidityTXT ,
@@ -566,7 +546,7 @@ ul.weekdaysWithweather > li > .tempture .tempHigh{
     justify-content: center;
     align-items: center;
     gap: 15px;
-    color: var(--main-tx-clr);
+    color: var(--alt-tx-clr);
 }
 .countryNameMob .CountryMob ,
 .countryNameMob .cityMob{
@@ -632,12 +612,12 @@ ul.weekdaysWithweather > li > .tempture .tempHigh{
     padding: 10px 8px;
     border: none;
     outline: none;
-    background-color: #c4c4c4;
+    background: #c4c4c4;
     border-radius: 8px;
-    transition: border 0.3s ease , background-color 0.5s ease-out;
+    transition: border 0.3s ease , background 0.5s ease-out;
 }
 .getUsername×Onload .usernamefield >input[type='text']:focus{
-    background-color: #FFF;
+    background: #FFF;
     border: 5px solid var(--alt-bg-clr);
 }
 .getUsername×Onload .usernamefield >button.sendUsername{
@@ -645,7 +625,7 @@ ul.weekdaysWithweather > li > .tempture .tempHigh{
     width: 100%;
     padding: 5px 0;
     color: #fff;
-    background-color: var(--alt-bg-clr);
+    background: var(--alt-bg-clr);
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -657,4 +637,38 @@ ul.weekdaysWithweather > li > .tempture .tempHigh{
 .getUsername×Onload .usernamefield >button.sendUsername >:first-child{
     font-size: 1.5rem;
     transform: rotate(-40deg);
+}
+.notifications-popup{
+    position: fixed;
+    z-index: 99;
+    bottom: 2%;
+    left: 2%;
+    padding: 10px;
+    background: #212121;
+    border-radius: 8px;
+    transition: transform 0.5s cubic-bezier(0.86, 0, 0.07, 1) ,height 0.5s ease-out;
+    transform: translateX(-200%);
+    gap: 8px;
+}
+.notifications-popup.active{
+    transform: translateX(0);
+}
+
+.notifications-popup .msgBox{
+    border: 2px solid #777;
+    gap: 20px;
+    list-style: none;
+    border-radius: 9px;
+    padding: 1px 8px;
+}
+.notifications-popup .notif-msg{
+    margin: auto;
+    color: var(--alt-tx-clr);
+    text-align: start;
+    text-transform: capitalize;
+}
+
+.notifications-popup .notif-logo{
+    color: #FFC900;
+    font-size: 2.0rem;
 }

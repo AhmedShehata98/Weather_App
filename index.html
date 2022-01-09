@@ -21,9 +21,17 @@
             <div class="toggle">
                 <ion-icon name="menu"></ion-icon>
             </div>
-            <nav>
-                <li>
-                    <a href="#">Search City</a>
+            <nav class="ControlPannel flexbox-center-column">
+                <li class="mobSearchCont flexbox-center-row">
+                    <input type="search" id="mobSearch">
+                    <button id="mobSendData" class="flexbox-center-row">
+                        <ion-icon name="search"></ion-icon>
+                    </button>
+                </li>
+                <li class="toggleNotificationPanel flexbox-center-row">
+                    <ion-icon class="mobNotifiList" name="list"></ion-icon>
+                    <a href="#">Notifications Panel</a>
+                    <span class="NotifCount">0</span>
                 </li>
             </nav>
         </div>
@@ -43,16 +51,13 @@
                             <ion-icon name="search"></ion-icon>
                         </button>
                     </div>
-                    <div class="suggestList">
-                        <li>city</li>
-                    </div>
                 </header>
                 <div class="forecastBar">
                     <h3 >Wheather</h3>
                     <h3 class="active">Forecast</h3>
                 </div>
                 <div class="countrysCont">
-                    <div data-id="alexandria" class="country">
+                    <div data-id="Al Iskandariyah" class="country">
                         <div class="countryIMG">
                             <img src="assists/img/egypt/citys/alexsandria.jpg" alt="">
                         </div>
@@ -60,7 +65,7 @@
                             alexandria
                         </span>
                     </div>
-                    <div  data-id="cairo" class="country">
+                    <div  data-id="Al Qahirah" class="country">
                         <div class="countryIMG">
                             <img src="assists/img/egypt/citys/cairo.jpg" alt="">
                         </div>
@@ -76,7 +81,7 @@
                             giza
                         </span>
                     </div>
-                    <div  data-id="aswan" class="country">
+                    <div  data-id="Aswan" class="country">
                         <div class="countryIMG">
                             <img src="assists/img/egypt/citys/aswan.jpg" alt="">
                         </div>
@@ -84,7 +89,7 @@
                             aswan
                         </span>
                     </div>
-                    <div  data-id="luxor" class="country">
+                    <div  data-id="Qina" class="country">
                         <div class="countryIMG">
                             <img src="assists/img/egypt/citys/luxor.jpg" alt="">
                         </div>
@@ -138,16 +143,16 @@
                     <header class="welcomeSection">
                         <h3 class="welcomeMSG">Good afternon</h3>
                         <ion-icon class="userIMG" name="contact"></ion-icon>
-                        <h3 class="username">Ahmed Shehata</h3>
+                        <h3 class="username"></h3>
                     </header>
                     <div class="dateAndTimeMob">
                         <label> last Update</label>
-                        <span class="date">Monday 2/1</span>
-                        <div class="time">16:23</div>
+                        <span class="date">?? /  ??</span>
+                        <div class="time">??</div>
                     </div>
                     <div class="WeatherInfo">
                         <span class="tempture">
-                            <p class="temp">22</p>
+                            <p class="temp">??</p>
                         </span>
                         <div class="forecaseDescription flexbox-center-row">
                             <img class="TempatureLogo" src="assists/img/weather-conditions/cloudy.png" alt="">
@@ -156,12 +161,12 @@
                         <span class="feelAndHumidity flexbox-center-row">
                             <span class="FeelLikeMob flexbox-center-row">
                                 <ion-icon class="secLogo" name="man"></ion-icon>
-                                <p class="feelTXTMob">42%</p>
+                                <p class="feelTXTMob">?? %</p>
                                 <span>&#8451</span>
                             </span>
                             <span class="Humidity flexbox-center-row">
                                 <ion-icon class="HumidityLogo" name="water"></ion-icon>
-                                <p class="HumidityTXT"></p>
+                                <p class="HumidityTXT">??</p>
                             </span>
                         </span>
                     </div>
@@ -169,7 +174,7 @@
                         <span class="CountryMob">
                             <ion-icon class="countrySecLogo" name="locate"></ion-icon>
                         </span>
-                        <span class="cityMob"></span>
+                        <span class="cityMob">??</span>
                     </div>
                 </div>
             </section>
@@ -177,7 +182,7 @@
         <section class="getUsername×Onload flexbox-center-row">
             <div class="onloadWelcomeMSG">
                 <h1>Hello Dear User</h1>
-                <p>Welcome With Me Weather App ,. Please enter Your Name </p>
+                <p>Welcome With Me Weather App Please enter Your Name </p>
             </div>
             <div class="usernamefield flexbox-center-column">
                 <input type="text" id="username">
@@ -187,6 +192,9 @@
                 </button>
             </div>
         </section>
+        <div class="notifications-popup flexbox-center-column">
+
+        </div>
     </main>
 
     <script src="js/weather.js" ></script>
