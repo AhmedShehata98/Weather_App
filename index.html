@@ -5,18 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Ionicon Font Icon -->
-    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
-    <link rel="stylesheet" href="css/vendor/normalize.css">
-    <link rel="stylesheet" href="css/animations.css">
+    <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" href="css/weather.css">
-    <title>Wheather</title>
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/vendor/normalize.css">
+    <link rel="shortcut icon" href="assists/img/favicon/weather.png" type="image/x-icon">
+    <title>Weather</title>
 </head>
 <body>
     <header class="mainAppHeader">
         <div class="container">
             <div class="logo">
                 <img class="logoImg" src="assists/img/logo/weather.png" alt="">
-                <h2 class="textlogo">Wheather</h2>
+                <h2 class="textlogo">Weather</h2>
             </div>
             <div class="toggle">
                 <ion-icon name="menu"></ion-icon>
@@ -33,6 +35,26 @@
                     <a href="#">Notifications Panel</a>
                     <span class="NotifCount">0</span>
                 </li>
+                <li class="Contact_us flexbox-center-row">
+                    <div class="fbaccount flexbox-center-column">
+                        <a href="https://www.facebook.com/MidoEsquire">
+                            <ion-icon name="logo-facebook"></ion-icon>
+                            <p>My FB</p>
+                        </a>
+                    </div>
+                    <div class="linkdInAccount flexbox-center-column">
+                        <a href="https://www.linkedin.com/in/ahmed-shehata-b63001225/">
+                            <ion-icon name="logo-linkedin"></ion-icon>
+                            <p>Linkd iN</p>
+                        </a>
+                    </div>
+                    <div class="gitAccount flexbox-center-column">
+                        <a href="http://github.com/ahmedShehata98/">
+                            <ion-icon name="logo-github"></ion-icon>
+                            <p>GitHub</p>
+                        </a>
+                    </div>
+                </li>
             </nav>
         </div>
     </header>
@@ -40,21 +62,15 @@
             <section class="leftSection">
                 <header class="appSearch">
                     <div class="CityChoosedName flexbox-center-row">
-                        <h3 class="countryDisplayedTxt">alexsandria</h3>
+                        <label> Region :</label>
                         <div class="countryDisplayedIMG">
-                            <img src="/assists/img/egypt/citys/alexsandria.jpg" alt="">
+                            <img src="/assists/img/General_Icons/wait.png" alt="city Image">
                         </div>
-                    </div>
-                    <div class="searchContainer flexbox-center-row">
-                        <input type="search" placeholder="Enter Your City Name..." id="inputCity">
-                        <button class="sendSearcgData">
-                            <ion-icon name="search"></ion-icon>
-                        </button>
+                        <h3 class="countryDisplayedTxt">No Data Yet ..</h3>
                     </div>
                 </header>
                 <div class="forecastBar">
-                    <h3 >Wheather</h3>
-                    <h3 class="active">Forecast</h3>
+                    <h3 class="active">Cities</h3>
                 </div>
                 <div class="countrysCont">
                     <div data-id="Al Iskandariyah" class="country">
@@ -73,7 +89,7 @@
                             cairo
                         </span>
                     </div>
-                    <div  data-id="giza" class="country">
+                    <div  data-id="Giza" class="country">
                         <div class="countryIMG">
                             <img src="assists/img/egypt/citys/giza.jpg" alt="">
                         </div>
@@ -97,41 +113,49 @@
                             luxor
                         </span>
                     </div>
+                    <div  data-id="Al Isma'iliyah" class="country">
+                        <div class="countryIMG">
+                            <img src="assists/img/egypt/citys/Ismailia.jpg" alt="">
+                        </div>
+                        <span class="countryTxt">
+                            Al Isma'iliyah
+                        </span>
+                    </div>
                 </div>
                 <div class="weekdaysBar">
                     <h3 class="active">Week</h3>    
                 </div>
                 <ul class="weekdaysWithweather">
-                    <li>
+                    <li class="flexbox-center-row">
                         <a class="day" href="#">
                             Sunday
                         </a>
                         <span class="humidityCountainer flexbox-center-row">
                             <ion-icon class="humidityIco" name="water"></ion-icon>
-                            <p class="humidityTxt">65%</p>
+                            <p class="humidityTxt">?? %</p>
                         </span>
                         <span class="weatherCondition flexbox-center-row">
                             <img class="weatherConditionIco" src="/assists/img/weather-conditions/cloudy (1).png" alt="">
-                            <p class="weatherConditionTxt">Cloudly day</p>
+                            <p class="weatherConditionTxt">No Data yet</p>
                         </span>
-                        <span class="pressure flexbox-center-row">
-                            <ion-icon class="pressureIco" name="speedometer"></ion-icon>
-                            <p class="pressureTxt">1025 hPa</p>
+                        <span class="winds flexbox-center-row">
+                            <img class="windsIco" src="assists/img/weather-conditions/wind.png" alt="">
+                            <p class="windsTxT">??</p>
                         </span>
                         <span class="feelLike flexbox-center-row">
                             <ion-icon class="feelLikeIco" name="man"></ion-icon>
-                            <p class="feelLikeTxt">17</p>
+                            <p class="feelLikeTxt">??</p>
                             <span>&#8451</span>
                         </span>
                         <span class="tempture flexbox-center-row">
                             <span class="tempMin flexbox-center-row">
                                 <ion-icon class="tempMinIco" name="thermometer"></ion-icon>
-                                <p class="tempMinTxt">14</p>
+                                <p class="tempMinTxt">??</p>
                                 <span>&#8451</span>
                             </span>
                             <span class="tempHigh flexbox-center-row">
                                 <ion-icon name="thermometer"></ion-icon>
-                                <p class="tempHighTxt">19</p>
+                                <p class="tempHighTxt">??</p>
                                 <span>&#8451</span>
                             </span>
                         </span>
@@ -171,8 +195,8 @@
                         </span>
                     </div>
                     <div class="countryNameMob">
+                        <ion-icon class="countrySecLogo" name="navigate"></ion-icon>
                         <span class="CountryMob">
-                            <ion-icon class="countrySecLogo" name="locate"></ion-icon>
                         </span>
                         <span class="cityMob">??</span>
                     </div>

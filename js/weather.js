@@ -1,139 +1,157 @@
 // iniializing Variables
 // 
-let currentLocation ;
+let cityNameInput ='egypt' ,
+    lat ,
+    lon ;
 
 const toggleBTN               = document.querySelector('.toggle');
 const navControlpanel         = document.querySelector('.ControlPannel');
 const mobSearch               = document.querySelector('#mobSearch');
 const mobSendData             = document.querySelector('#mobSendData');
 const toggleNotificationPanel = document.querySelector('.toggleNotificationPanel');
-const NotifCount = document.querySelector('.toggleNotificationPanel');
+const NotifCount              = document.querySelector('.toggleNotificationPanel .NotifCount');
 
 
-const searchInput = document.querySelector('.searchContainer #inputCity');
-const suggestList = document.querySelector('.leftSection .appSearch .searchContainer .suggestList');
-const weekDays = [ 'Saturday','Sunday','Monday','Tuesday','Wednesday' ,'Thursday' ,'Friday' ];
+const searchInput       = document.querySelector('.searchContainer #inputCity');
+const suggestList       = document.querySelector('.leftSection .appSearch .searchContainer .suggestList');
+const weekDays          = [ 'Saturday','Sunday','Monday','Tuesday','Wednesday' ,'Thursday' ,'Friday' ];
 
 const weekDaysContainer = document.querySelector('ul.weekdaysWithweather');
 const cityChoosedName   = document.querySelector('.CityChoosedName .countryDisplayedTxt')
-const cityChoosedImg   = document.querySelector('.CityChoosedName .countryDisplayedIMG img')
+const cityChoosedImg    = document.querySelector('.CityChoosedName .countryDisplayedIMG img')
 
-const onloadOverlay = document.querySelector('.getUsername×Onload')
-const onloadOverlayInput = document.querySelector('.getUsername×Onload #username');
-const onloadOverlayBTN = document.querySelector('.getUsername×Onload .sendUsername');
-const mobWelcomeMSG = document.querySelector('.welcomeMSG');
-const mobUserName =document.querySelector('.username');
-const mobDate =document.querySelector('.dateAndTimeMob .date');
-const mobTime =document.querySelector('.dateAndTimeMob .time');
-const temp  = document.querySelector('.WeatherInfo .tempture .temp');
-const forecastLogo  = document.querySelector('.WeatherInfo .TempatureLogo');
-const feelLike  = document.querySelector('.WeatherInfo .feelTXTMob');
-const humidityMob  = document.querySelector('.WeatherInfo .HumidityTXT');
-const CountryMob  = document.querySelector('.CountryMob')
-const CityMob  = document.querySelector('.cityMob');
-const forecastDescription  = document.querySelector('.ForecastDescriptonTxt');
-const notification_popup = document.querySelector('.notifications-popup ')
-const countriesList      = document.querySelectorAll('.countrysCont .country')
+const onloadOverlay     = document.querySelector('.getUsername×Onload')
+const onloadOverlayInput= document.querySelector('.getUsername×Onload #username');
+const onloadOverlayBTN  = document.querySelector('.getUsername×Onload .sendUsername');
+const mobWelcomeMSG     = document.querySelector('.welcomeMSG');
+const mobUserName       = document.querySelector('.username');
+const mobDate           = document.querySelector('.dateAndTimeMob .date');
+const mobTime           = document.querySelector('.dateAndTimeMob .time');
+const temp              = document.querySelector('.WeatherInfo .tempture .temp');
+const forecastLogo      = document.querySelector('.WeatherInfo .TempatureLogo');
+const feelLike          = document.querySelector('.WeatherInfo .feelTXTMob');
+const humidityMob       = document.querySelector('.WeatherInfo .HumidityTXT');
+const CountryMob        = document.querySelector('.CountryMob')
+const CityMob           = document.querySelector('.cityMob');
+const forecastDescription = document.querySelector('.ForecastDescriptonTxt');
+const notification_popup  = document.querySelector('.notifications-popup ')
+const countriesList       = document.querySelectorAll('.countrysCont .country')
 
 
 // creating Functuions
 // 
 // 
 
-
+// GET Location in latitude and longitude
+// Start
 function GetUserlocation (){
     if (navigator.geolocation){
         navigator.geolocation.getCurrentPosition(successPosition,posError )
     }else{
         createAlertMSG('Your browser isnt support this method, try to search in search box',3500)
         clearLastAlertMSG(3000)
+    }
+}
+        function successPosition(position){
+            lat = position.coords.latitude
+            lon = position.coords.longitude
+        }
+
+        function posError(error){
+            switch(error.code){
+                case error.PERMISSION_DENIED:
+                    createAlertMSG('Hey! You declined your location request How am I supposed to know your location',5000);
+                case error.POSITION_UNAVAILABLE:
+                    createAlertMSG("Unable to locate your location, please check your GPS   settings ",5000)
+                    getLocationFrom();
+            }
+        }
+// 
+// End 
+
+
+
+/* get location for the weather api from GeoLocation If can't 
+get the 'Lat & lon' information so try to Get information from 
+user Search input ..
+*/
+GetUserlocation();
+
+setTimeout(()=>{
+    getLocationFromInput();
+    getLocationByClickOn(countriesList);
+    function getLocationByClickOn(countriesList){
+        countriesList.forEach(country=>{
+            country.addEventListener('click',(e)=>{
+                console.log(e.target.closest('.country').dataset.id);
+            cityNameInput = e.target.closest('.country').dataset.id;
+            let API_URL= `https://api.weatherapi.com/v1/forecast.json?key=88fd05005e44488bab5121339220701%20&days=7&aqi=no&alerts=no&q=${cityNameInput}`
+            FETCH_WEATHER_DATA_FROM(API_URL)
+        })
         
-        // Get City name from search input 
-        getLocationFrom();
+        })
     }
-}
-
-function successPosition(position){
-    let usrLatitude = position.coords.latitude
-    let usrLongtude = position.coords.longitude
-        fetchApiData(usrLatitude,usrLongtude);
-}
-
-function posError(error){
-    switch(error.code){
-        case error.PERMISSION_DENIED:
-            createAlertMSG('Hey! You declined your location request How am I supposed to know your location',5000);
-            clearLastAlertMSG(5000);
-            getLocationFrom();
-        case error.POSITION_UNAVAILABLE:
-            createAlertMSG("Unable to locate your location, please check your GPS   settings",5000)
-            clearLastAlertMSG(5000);
-            getLocationFrom();
+    function getLocationFromInput(){
+        mobSendData.addEventListener('click',()=>{
+            cityNameInput = mobSearch.value;
+            mobSearch.value = ''
+            let API_URL= `https://api.weatherapi.com/v1/forecast.json?key=88fd05005e44488bab5121339220701%20&days=7&aqi=no&alerts=no&q=${cityNameInput}`
+            FETCH_WEATHER_DATA_FROM(API_URL)
+        })
     }
-}
 
-function getLocationFrom(){
-    mobSendData.addEventListener('click',()=>{
-        let cityName = mobSearch.value;
-        fetchApiData();
-    })
-}
+        // this condition is for control btw calling methods
+            if (lat !== undefined && lon !== undefined) {
 
-async function fetchApiData (lat,longt,cityName){
-    if (lat !== null || lat !== undefined && longt !== null || longt !== undefined )
-    {
-        let apiURL = 'http://api.weatherapi.com/v1/forecast.json?key=88fd05005e44488bab5121339220701&days=7&aqi=no&alerts=no&'
+                let API_URL= `https://api.weatherapi.com/v1/forecast.json?key=88fd05005e44488bab5121339220701%20&days=7&aqi=no&alerts=no&dt&q=${lat},${lon}`
+                        FETCH_WEATHER_DATA_FROM(API_URL)
 
-        let respone = await fetch(apiURL + "q=" + lat +','+ longt ),
-        data =  await respone.json();
-        currentLocation =data.location.region
+            }else{
+                mobSearch.focus();
+                let API_URL= `https://api.weatherapi.com/v1/forecast.json?key=88fd05005e44488bab5121339220701%20&days=7&aqi=no&alerts=no&q=${cityNameInput}`
+                        FETCH_WEATHER_DATA_FROM(API_URL)
+            }
+
+    async function FETCH_WEATHER_DATA_FROM (API_URL){
+
+
+        let respone = await fetch(API_URL);
+        let data =  await respone.json();
+    
+
         weekdaysForecatHTML(weekDays,data);
         ForecastInnerMobile(data);
         setMobForecastBG(data)
         getSelectedRegionBasedOn(data)
-    }else{
-        let apiURL = 'http://api.weatherapi.com/v1/forecast.json?key=88fd05005e44488bab5121339220701&days=7&aqi=no&alerts=no&'
-
-        let respone = await fetch(apiURL + "q=" + cityName ),
-        data =  await respone.json();
-        currentLocation =data.location.region
-        weekdaysForecatHTML(weekDays,data);
-        ForecastInnerMobile(data);
-        setMobForecastBG(data)
     }
-
-}
-
-// async function fetchDataCityName(cityname1) {
-//     let apiURL = 
-// }
+},3000)
 
 var weekdaysForecatHTML=(weekdaysArr,apiData)=>{
         weekDaysContainer.innerHTML = '';
         cityChoosedName.textContent = apiData.location.name;
         ImgSrc(apiData);
-        
 
     for(let i=0 ; i < apiData.forecast.forecastday.length ;i++){
         let li = document.createElement('li'),
         dayName = document.createElement('a'),
         spanHumidityCountainer = document.createElement('span'),
         spanweatherConditionCountainer   = document.createElement('span'),
-        spanPressureCountainer = document.createElement('span'),
+        spanWindsCountainer = document.createElement('span'),
         spanFeelLikeCountainer = document.createElement('span'),
         spanTemptureCountainer = document.createElement('span'),
 
         spanTempMinChild  = document.createElement('span'),
         spanTempMaxChild  = document.createElement('span'),
         humidityLogo = document.createElement('ion-icon'),
-        pressureLogo = document.createElement('ion-icon'),
+        windsLogo = document.createElement('img'),
         feelLikeLogo = document.createElement('ion-icon'),
         tempMinLogo  = document.createElement('ion-icon'),
         tempMaxLogo  = document.createElement('ion-icon'),
         weatherConditionImg  = document.createElement('img'),
+        windsImg  = document.createElement('img'),
         humidityTXT  = document.createElement('p'),
         weatherConditionTXT  = document.createElement('p'),
-        pressureTXT  = document.createElement('p'),
+        windsTXT  = document.createElement('p'),
         feelLikeTXT  = document.createElement('p'),
         minTempTXT  = document.createElement('p'),
         maxTempTXT  = document.createElement('p');
@@ -143,13 +161,13 @@ var weekdaysForecatHTML=(weekdaysArr,apiData)=>{
         li.appendChild(dayName);
         li.appendChild(spanHumidityCountainer);
         li.appendChild(spanweatherConditionCountainer);
-        li.appendChild(spanPressureCountainer);
+        li.appendChild(spanWindsCountainer);
         li.appendChild(spanFeelLikeCountainer);
         li.appendChild(spanTemptureCountainer);
         dayName.appendChild( document.createTextNode(weekdaysArr[i]));
         spanHumidityCountainer.appendChild(humidityLogo );
         spanweatherConditionCountainer.appendChild(weatherConditionImg );
-        spanPressureCountainer.appendChild(pressureLogo );
+        spanWindsCountainer.appendChild(windsLogo );
         spanFeelLikeCountainer.appendChild(feelLikeLogo );
         spanTemptureCountainer.appendChild( spanTempMinChild);
         spanTemptureCountainer.appendChild( spanTempMaxChild);
@@ -159,11 +177,11 @@ var weekdaysForecatHTML=(weekdaysArr,apiData)=>{
         spanTempMaxChild.appendChild(maxTempTXT);
         spanHumidityCountainer.appendChild( humidityTXT);
         spanweatherConditionCountainer.appendChild(weatherConditionTXT );
-        spanPressureCountainer.appendChild( pressureTXT);
+        spanWindsCountainer.appendChild( windsTXT);
         spanFeelLikeCountainer.appendChild(feelLikeTXT );
         humidityTXT.appendChild(document.createTextNode(apiData.forecast.forecastday[i].day.avghumidity +' %'));
         weatherConditionTXT.appendChild( document.createTextNode(apiData.forecast.forecastday[i].day.condition.text));
-        pressureTXT.appendChild( document.createTextNode( '??' ));
+        windsTXT.appendChild( document.createTextNode( apiData.forecast.forecastday[i].day.maxwind_kph +' '+'KPH' ));
         feelLikeTXT.appendChild(document.createTextNode(Math.trunc(apiData.forecast.forecastday[i].day.avgtemp_c)));
         minTempTXT.appendChild( document.createTextNode(Math.trunc(apiData.forecast.forecastday[i].day.mintemp_c)));
         maxTempTXT.appendChild( document.createTextNode(Math.trunc(apiData.forecast.forecastday[i].day.maxtemp_c)));
@@ -172,6 +190,7 @@ var weekdaysForecatHTML=(weekdaysArr,apiData)=>{
         maxTempTXT.innerHTML += '  '+'&#8451'
 
         // set attribute and classes
+        li.className = 'flexbox-center-row'
         dayName.className ='day';
         spanHumidityCountainer.className ='humidityCountainer flexbox-center-row';
         humidityLogo.className='humidityIco';
@@ -179,10 +198,10 @@ var weekdaysForecatHTML=(weekdaysArr,apiData)=>{
         humidityTXT.className='humidityTxt';
         spanweatherConditionCountainer.className ='weatherCondition flexbox-center-row';
         weatherConditionImg.src = apiData.forecast.forecastday[i].day.condition.icon;
-        spanPressureCountainer.className ='pressure flexbox-center-row';
-        pressureLogo.className='pressureIco';
-        pressureLogo.setAttribute('name','speedometer');
-        pressureTXT.className='pressureTxt';
+        spanWindsCountainer.className ='winds flexbox-center-row';
+        windsLogo.className='windsIco';
+        windsLogo.setAttribute('src','../assists/img/weather-conditions/wind.png');
+        windsTXT.className='windsTXT';
         spanFeelLikeCountainer.className ='feelLike flexbox-center-row';
         feelLikeLogo.className='feelLikeIco';
         feelLikeLogo.setAttribute('name','man');
@@ -204,8 +223,9 @@ var weekdaysForecatHTML=(weekdaysArr,apiData)=>{
 
 // Set The reion img in the page the known who the region is now
 function ImgSrc(api){
-    let name = api.location.region;
-    switch (name) {
+    let regoin = api.location.region;
+    let name = api.location.name;
+    switch (regoin) {
         case "Al Iskandariyah":
             cityChoosedImg.src = '../assists/img/egypt/citys/alexsandria.jpg'
             break;
@@ -215,22 +235,25 @@ function ImgSrc(api){
         case "Al Isma'iliyah":
             cityChoosedImg.src = '../assists/img/egypt/citys/Ismailia.jpg'
             break;
-        case 'Giza':
-            cityChoosedImg.src  = '../assists/img/egypt/citys/giza.jpg'
-            break;
         case 'Aswan':
             cityChoosedImg.src  = '../assists/img/egypt/citys/aswan.jpg'
             break;
-        case 'Qina':
-            cityChoosedImg.src  = '../assists/img/egypt/citys/luxor.jpg'
-            break;
+
         default:
             cityChoosedImg.src  = '../assists/img/egypt/citys/default.png'
             break;
     }
+    switch(name){
+        case 'Giza':
+            cityChoosedImg.src  = '../assists/img/egypt/citys/giza.jpg'
+            break;
+        case 'Luxor':
+            cityChoosedImg.src  = '../assists/img/egypt/citys/luxor.jpg'
+            break;
+    }
 }
 
-// Hndling beavior in splash screen
+// Hndling splash screen beavior
 var onloadOverLayMSG=()=>{
     onloadOverlayBTN.addEventListener('click',()=>{
         if (onloadOverlayInput.value == null || onloadOverlayInput.value == '') {
@@ -239,14 +262,29 @@ var onloadOverLayMSG=()=>{
 
 
             // add active class to popup panel and set timeout to remove that after 1.5s
-            createAlertMSG(" Be careful, you didn't enter your name ",3000)
-            clearLastAlertMSG(2000)
+            createAlertMSG(" Be careful, you didn't enter your name ",8000)
+            clearLastAlertMSG(7500)
 
         }else{    
-            mobUserName.textContent = onloadOverlayInput.value;
+            // mobUserName.textContent = onloadOverlayInput.value;
+            
+            //  check if value is existing in localstorage if not so set value
+            if (window.localStorage.getItem('userName') === null ) {
+                SaveToStorage("userName",onloadOverlayInput.value.trim());
+                mobUserName.textContent = getFromStorage('userName')
+                onloadOverlay.remove();
+            }
         }
-        onloadOverlay.remove();
     })
+}
+
+// get username and remove overlay
+window.onload= function(){
+    if (window.localStorage.getItem('userName') !== null) {
+        onloadOverlay.remove();
+        mobUserName.textContent = getFromStorage('userName');
+    }
+    
 }
 
 
@@ -256,42 +294,28 @@ var ForecastInnerMobile = (api)=>{
     mobTime.textContent= api.current.last_updated.split(' ')[1]
 
     // forecast inner
-    temp.textContent = api.current.temp_c;
+    temp.textContent = Math.trunc(api.current.temp_c);
     forecastLogo.src = api.current.condition.icon;
-    feelLike.textContent = api.current.feelslike_c;
+    feelLike.textContent = Math.trunc(api.current.feelslike_c);
     humidityMob.textContent = api.current.humidity + ' %';
-    CountryMob.appendChild(document.createTextNode(api.location.country))
+    CountryMob.textContent= api.location.country
     CityMob.textContent = api.location.region || api.location.name;
     forecastDescription.textContent = api.current.condition.text;
 }
 
+
+// If For Setup Background Image based on time now 
 var setMobForecastBG=(api)=>{
     let getAPIHour = Number( api.location.localtime.split(' ')[1].split(":")[0]);
-    
+
     if (getAPIHour > 12) {
         mobWelcomeMSG.textContent = 'Good Evening'
-
-    }else{
-
-        mobWelcomeMSG.textContent = 'Good Morinig'
-    }
-
-        // If For Setup Background Image based on time now and temp degree
-
-    if (api.current.feelslike_c <= 14 && getAPIHour >= 12) {
-        document.querySelector('.rightSection').style.backgroundImage= "  url('../assists/img/winter/winNight.png') "
-    }else if(api.current.feelslike_c <= 14 && getAPIHour < 12){
-        document.querySelector('.rightSection').style.backgroundImage= "  url('../assists/img/winter/winmorning.png') "
-    }
-
-    if (api.current.feelslike_c >= 19 && getAPIHour < 12) {
-        document.querySelector('.rightSection').style.backgroundImage= "  url('../assists/img/summer/summMorning.png') "
-        
-    }else if(api.current.feelslike_c >= 19 && getAPIHour >= 12){
         document.querySelector('.rightSection').style.backgroundImage= "  url('../assists/img/summer/summNight.png') "
 
+    }else{
+        mobWelcomeMSG.textContent = 'Good Morinig'
+        document.querySelector('.rightSection').style.backgroundImage= "  url('../assists/img/summer/summMorning.png') "
     }
-
 
 }
 
@@ -330,52 +354,47 @@ function clearLastAlertMSG(afterTime) {
 
 function getSelectedRegionBasedOn(api){
     countriesList.forEach(country =>{
+        country.classList.contains('active') ? country.classList.remove('active') : ""
         if (api.location.region === country.getAttribute('data-id')) {
             country.classList.add('active')
         }
+        if (api.location.region == '') {
+            if (api.location.name === country.getAttribute('data-id') ) {
+            country.classList.add('active')
+            }
+        }
+
     })
+}
+
+function SaveToStorage(keyName,Value){
+    if (keyName !== null || keyName!== undefined && Value !== null ||Value !== undefined) {
+        window.localStorage.setItem(keyName,Value);
+    }else{
+        console.log(Error ,"{ There's Something }");
+    }
+}
+
+function getFromStorage(key){
+    if (window.localStorage.length > 0) {
+     return  window.localStorage.getItem(key)
+    }else{
+        console.log(Error ,"{ There's Something }");
+    }
 }
 // Calling Functions
 // 
 
-GetUserlocation();
 onloadOverLayMSG();
-getLocationFrom();
 
 // Adding Events
 // 
 
 
-
-searchInput.addEventListener('keyup',()=>{
-    
-    if (searchInput.value.length >= 1) {
-        suggestList.classList.add('active');
-        suggestList.innerHTML = `<li>${searchInput.value}</li>`
-
-        // Get Value and remove list items
-            Array.from(suggestList.children).forEach( child =>{
-                child.addEventListener('click',(e)=>{
-                    GeoLocation = e.target.textContent ;
-                    fetchApiData(urlAPI);
-
-                    
-                    e.target.parentElement.remove() ;
-                })
-            })
-    }else{
-        
-        suggestList.classList.remove('active')
-
-    }
-})
-
-searchInput.addEventListener('keyup',(e)=>{
-    if (e.key === 'Backspace') {
-        Array.from(suggestList.children).forEach( child => child.remove() )
-    }
-})
-
 toggleBTN.addEventListener('click',()=>{
     navControlpanel.classList.toggle('active')
+})
+
+toggleNotificationPanel.addEventListener('click',()=>{
+    notification_popup.classList.toggle('active')
 })
