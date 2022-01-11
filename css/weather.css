@@ -235,7 +235,6 @@ main.app{
     justify-content: space-between;
     align-items: flex-start;
     min-height: 95vh;
-    /* background: var(--main-bg-clr); */
     background-image: url('../assists/img/General_Icons/pc-version-bg.jpg');
     background-size: cover;
     background-position: bottom center;

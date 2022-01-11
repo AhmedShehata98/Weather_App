@@ -200,7 +200,7 @@ var weekdaysForecatHTML=(weekdaysArr,apiData)=>{
         weatherConditionImg.src = apiData.forecast.forecastday[i].day.condition.icon;
         spanWindsCountainer.className ='winds flexbox-center-row';
         windsLogo.className='windsIco';
-        windsLogo.setAttribute('src','../assists/img/weather-conditions/wind.png');
+        windsLogo.setAttribute('src','assists/img/weather-conditions/wind.png');
         windsTXT.className='windsTXT';
         spanFeelLikeCountainer.className ='feelLike flexbox-center-row';
         feelLikeLogo.className='feelLikeIco';
@@ -227,28 +227,28 @@ function ImgSrc(api){
     let name = api.location.name;
     switch (regoin) {
         case "Al Iskandariyah":
-            cityChoosedImg.src = '../assists/img/egypt/citys/alexsandria.jpg'
+            cityChoosedImg.src = 'assists/img/egypt/citys/alexsandria.jpg'
             break;
         case "Al Qahirah":
-            cityChoosedImg.src = '../assists/img/egypt/citys/cairo.jpg'
+            cityChoosedImg.src = 'assists/img/egypt/citys/cairo.jpg'
             break;
         case "Al Isma'iliyah":
-            cityChoosedImg.src = '../assists/img/egypt/citys/Ismailia.jpg'
+            cityChoosedImg.src = 'assists/img/egypt/citys/Ismailia.jpg'
             break;
         case 'Aswan':
-            cityChoosedImg.src  = '../assists/img/egypt/citys/aswan.jpg'
+            cityChoosedImg.src  = 'assists/img/egypt/citys/aswan.jpg'
             break;
 
         default:
-            cityChoosedImg.src  = '../assists/img/egypt/citys/default.png'
+            cityChoosedImg.src  = 'assists/img/egypt/citys/default.png'
             break;
     }
     switch(name){
         case 'Giza':
-            cityChoosedImg.src  = '../assists/img/egypt/citys/giza.jpg'
+            cityChoosedImg.src  = 'assists/img/egypt/citys/giza.jpg'
             break;
         case 'Luxor':
-            cityChoosedImg.src  = '../assists/img/egypt/citys/luxor.jpg'
+            cityChoosedImg.src  = 'assists/img/egypt/citys/luxor.jpg'
             break;
     }
 }
@@ -310,11 +310,11 @@ var setMobForecastBG=(api)=>{
 
     if (getAPIHour > 12) {
         mobWelcomeMSG.textContent = 'Good Evening'
-        document.querySelector('.rightSection').style.backgroundImage= "  url('../assists/img/summer/summNight.png') "
+        document.querySelector('.rightSection').style.backgroundImage= "  url('assists/img/summer/summNight.png') "
 
     }else{
         mobWelcomeMSG.textContent = 'Good Morinig'
-        document.querySelector('.rightSection').style.backgroundImage= "  url('../assists/img/summer/summMorning.png') "
+        document.querySelector('.rightSection').style.backgroundImage= "  url('assists/img/summer/summMorning.png') "
     }
 
 }
