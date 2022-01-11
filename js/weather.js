@@ -44,12 +44,21 @@ const countriesList       = document.querySelectorAll('.countrysCont .country')
 
 // GET Location in latitude and longitude
 // Start
+// get username and remove overlay
+// This code is here for the exception to improve performance
+if (window.localStorage.getItem('userName') !== null) {
+    onloadOverlay.remove();
+    mobUserName.textContent = getFromStorage('userName');
+}
+
+/* get location for the weather api from GeoLocation If can't 
+get the 'Lat & lon' information 
+*/
 function GetUserlocation (){
     if (navigator.geolocation){
         navigator.geolocation.getCurrentPosition(successPosition,posError )
     }else{
         createAlertMSG('Your browser isnt support this method, try to search in search box',3500)
-        clearLastAlertMSG(3000)
     }
 }
         function successPosition(position){
@@ -62,69 +71,14 @@ function GetUserlocation (){
                 case error.PERMISSION_DENIED:
                     createAlertMSG('Hey! You declined your location request How am I supposed to know your location',5000);
                 case error.POSITION_UNAVAILABLE:
-                    createAlertMSG("Unable to locate your location, please check your GPS   settings ",5000)
-                    getLocationFrom();
+                    createAlertMSG("Unable to locate your location, please check your GPS settings ",5000)
             }
         }
 // 
+// This code is here for the exception to improve performance
+GetUserlocation();
 // End 
 
-
-
-/* get location for the weather api from GeoLocation If can't 
-get the 'Lat & lon' information so try to Get information from 
-user Search input ..
-*/
-GetUserlocation();
-
-setTimeout(()=>{
-    getLocationFromInput();
-    getLocationByClickOn(countriesList);
-    function getLocationByClickOn(countriesList){
-        countriesList.forEach(country=>{
-            country.addEventListener('click',(e)=>{
-                console.log(e.target.closest('.country').dataset.id);
-            cityNameInput = e.target.closest('.country').dataset.id;
-            let API_URL= `https://api.weatherapi.com/v1/forecast.json?key=88fd05005e44488bab5121339220701%20&days=7&aqi=no&alerts=no&q=${cityNameInput}`
-            FETCH_WEATHER_DATA_FROM(API_URL)
-        })
-        
-        })
-    }
-    function getLocationFromInput(){
-        mobSendData.addEventListener('click',()=>{
-            cityNameInput = mobSearch.value;
-            mobSearch.value = ''
-            let API_URL= `https://api.weatherapi.com/v1/forecast.json?key=88fd05005e44488bab5121339220701%20&days=7&aqi=no&alerts=no&q=${cityNameInput}`
-            FETCH_WEATHER_DATA_FROM(API_URL)
-        })
-    }
-
-        // this condition is for control btw calling methods
-            if (lat !== undefined && lon !== undefined) {
-
-                let API_URL= `https://api.weatherapi.com/v1/forecast.json?key=88fd05005e44488bab5121339220701%20&days=7&aqi=no&alerts=no&dt&q=${lat},${lon}`
-                        FETCH_WEATHER_DATA_FROM(API_URL)
-
-            }else{
-                mobSearch.focus();
-                let API_URL= `https://api.weatherapi.com/v1/forecast.json?key=88fd05005e44488bab5121339220701%20&days=7&aqi=no&alerts=no&q=${cityNameInput}`
-                        FETCH_WEATHER_DATA_FROM(API_URL)
-            }
-
-    async function FETCH_WEATHER_DATA_FROM (API_URL){
-
-
-        let respone = await fetch(API_URL);
-        let data =  await respone.json();
-    
-
-        weekdaysForecatHTML(weekDays,data);
-        ForecastInnerMobile(data);
-        setMobForecastBG(data)
-        getSelectedRegionBasedOn(data)
-    }
-},3000)
 
 var weekdaysForecatHTML=(weekdaysArr,apiData)=>{
         weekDaysContainer.innerHTML = '';
@@ -278,14 +232,6 @@ var onloadOverLayMSG=()=>{
     })
 }
 
-// get username and remove overlay
-window.onload= function(){
-    if (window.localStorage.getItem('userName') !== null) {
-        onloadOverlay.remove();
-        mobUserName.textContent = getFromStorage('userName');
-    }
-    
-}
 
 
 // Inner the Weather Forcast in mobile version section
@@ -382,10 +328,59 @@ function getFromStorage(key){
         console.log(Error ,"{ There's Something }");
     }
 }
+
+
+
+function getLocationByClickOn(countriesList){
+    countriesList.forEach(country=>{
+        country.addEventListener('click',(e)=>{
+            console.log(e.target.closest('.country').dataset.id);
+        cityNameInput = e.target.closest('.country').dataset.id;
+        let API_URL= `https://api.weatherapi.com/v1/forecast.json?key=88fd05005e44488bab5121339220701%20&days=7&aqi=no&alerts=no&q=${cityNameInput}`
+        FETCH_WEATHER_DATA_FROM(API_URL)
+    })
+    
+    })
+}
+function getLocationFromInput(){
+    mobSendData.addEventListener('click',()=>{
+        cityNameInput = mobSearch.value;
+        mobSearch.value = ''
+        let API_URL= `https://api.weatherapi.com/v1/forecast.json?key=88fd05005e44488bab5121339220701%20&days=7&aqi=no&alerts=no&q=${cityNameInput}`
+        FETCH_WEATHER_DATA_FROM(API_URL)
+    })
+}
+
+    // this condition is for control btw calling methods
+        if (lat !== undefined && lon !== undefined) {
+
+            let API_URL= `https://api.weatherapi.com/v1/forecast.json?key=88fd05005e44488bab5121339220701%20&days=7&aqi=no&alerts=no&dt&q=${lat},${lon}`
+                    FETCH_WEATHER_DATA_FROM(API_URL)
+
+        }else{
+            mobSearch.focus();
+            let API_URL= `https://api.weatherapi.com/v1/forecast.json?key=88fd05005e44488bab5121339220701%20&days=7&aqi=no&alerts=no&q=${cityNameInput}`
+                    FETCH_WEATHER_DATA_FROM(API_URL)
+        }
+
+async function FETCH_WEATHER_DATA_FROM (API_URL){
+
+
+    let respone = await fetch(API_URL);
+    let data =  await respone.json();
+
+    weekdaysForecatHTML(weekDays,data);
+    ForecastInnerMobile(data);
+    setMobForecastBG(data)
+    getSelectedRegionBasedOn(data)
+}
 // Calling Functions
 // 
 
+
 onloadOverLayMSG();
+getLocationByClickOn(countriesList);
+getLocationFromInput();
 
 // Adding Events
 // 
@@ -396,5 +391,10 @@ toggleBTN.addEventListener('click',()=>{
 })
 
 toggleNotificationPanel.addEventListener('click',()=>{
-    notification_popup.classList.toggle('active')
+    notification_popup.classList.toggle('active');
+    navControlpanel.classList.remove('active')
 })
+
+window.onload=function(){
+    NotifCount.textContent = document.querySelectorAll('.notifications-popup li').length;
+}
